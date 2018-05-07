@@ -1,11 +1,18 @@
 import React from "react";
 import { render } from "react-dom";
 
+import App from "./components/App";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
 
-const App = () => (
-  <div >
-    <h2>Start editing to see some magic happen {"\u2728"}</h2>
-  </div>
+import reducer from "./reducers";
+import middleware from "./middleware";
+
+const store = createStore(reducer, middleware);
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
 );
-
-render(<App />, document.getElementById("root"));
