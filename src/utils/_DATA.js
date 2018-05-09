@@ -1,4 +1,4 @@
-let TIMEOUT = Math.random * 3 + 1;
+let TIMEOUT = 1000;
 
 let users = {
   sarah_edo: {

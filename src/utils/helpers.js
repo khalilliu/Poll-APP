@@ -1,5 +1,5 @@
-export function isObejct(item) {
-  return Object.prototype.toString.call(item) === "[object object]";
+export function isObject(item) {
+  return Object.prototype.toString.call(item) === "[object Object]";
 }
 
 export function getPercentage(count, total) {

@@ -1,12 +1,12 @@
-import { _getUsers, _getPolls, _savePoll, _savePollAnswer } from "_DATA.js";
+import { _getUsers, _getPolls, _savePoll, _savePollAnswer } from "./_DATA.js";
 import { isObject } from "./helpers";
 
 function flattenPoll(poll) {
   return Object.keys(poll).reduce((flattenedPoll, key) => {
     var val = poll[key];
     if (isObject(val)) {
-      flattenedPoll[key + "text"] = val.text;
-      flattenedPoll[key + "votes"] = val.votes;
+      flattenedPoll[key + "Text"] = val.text;
+      flattenedPoll[key + "Votes"] = val.votes;
       return flattenedPoll;
     }
 
@@ -18,17 +18,17 @@ function flattenPoll(poll) {
 function formatPolls(polls) {
   const pollIds = Object.keys(polls);
   return pollIds.reduce((formattedPolls, pollId) => {
-    formattedPolls[id] = flattenPoll(polls[id]);
+    formattedPolls[pollId] = flattenPoll(polls[pollId]);
     return formattedPolls;
   }, {});
 }
 
 function formatUsers(users) {
-  return Object.key(users).reduce((formattedUsers, id) => {
+  return Object.keys(users).reduce((formattedUsers, id) => {
     const user = users[id];
     formattedUsers[id] = {
       ...user,
-      answer: Object.keys(user.answer)
+      answers: Object.keys(user.answers)
     };
 
     return formattedUsers;
@@ -36,7 +36,7 @@ function formatUsers(users) {
 }
 
 export function getInitialData() {
-  return Promise.all([_getUsers, _getPolls]).then(([users, polls]) => ({
+  return Promise.all([_getUsers(), _getPolls()]).then(([users, polls]) => ({
     users: formatUsers(users),
     polls: formatPolls(polls)
   }));
