@@ -1,4 +1,4 @@
-import { RECEIVE_POLLS } from "../actions/polls";
+import { RECEIVE_POLLS, ADD_POLL } from "../actions/polls";
 import { ADD_ANSWER } from "../actions/answers";
 
 export default function polls(state = {}, action) {
@@ -19,6 +19,11 @@ export default function polls(state = {}, action) {
           ...poll,
           [votesKey]: poll[votesKey].concat([authedUser])
         }
+      };
+    case ADD_POLL:
+      return {
+        ...state,
+        [action.poll.id]: action.poll
       };
 
     default:

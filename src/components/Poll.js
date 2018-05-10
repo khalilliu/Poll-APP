@@ -1,20 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { handleAddAnswer } from '../actions/answers';
+import { handleAddAnswer } from "../actions/answers";
 //helpers
 import { getVotedKeys, getTextKeys, getPercentage } from "../utils/helpers";
 
 @connect(mapStateToProps)
 class Poll extends Component {
   handleAnswer = answer => {
-    const {poll, authedUser} = this.props;
+    const { poll, authedUser } = this.props;
     this.answered = true;
-    this.props.dispatch(handleAddAnswer({
-      authedUser,
-      answer,  //a
-      pollId: poll.id
-    }))
-  }
+    this.props.dispatch(
+      handleAddAnswer({
+        authedUser,
+        answer, //a
+        pollId: poll.id
+      })
+    );
+  };
   render() {
     if (this.props.poll === null) {
       return <p>This poll doesn't exist</p>;
@@ -34,11 +36,15 @@ class Poll extends Component {
           {getTextKeys().map(key => {
             const count = poll[key[0] + "Votes"].length;
             return (
-              <li key={key} onClick={()=>{
-                if(vote == null && !this.answered ){
-                  this.handleAnswer(key[0]);
-                }
-              }}>
+              <li
+                key={key}
+                className={`option ${vote === key[0] ? "chosen" : ""}`}
+                onClick={() => {
+                  if (vote == null && !this.answered) {
+                    this.handleAnswer(key[0]);
+                  }
+                }}
+              >
                 {vote === null ? (
                   poll[key]
                 ) : (

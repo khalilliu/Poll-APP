@@ -54,7 +54,7 @@ class DashBoard extends Component {
 }
 
 function mapStateToProps({ authedUser, users, polls }) {
-  console.log(authedUser);
+  //console.log(authedUser);
   const answers = users[authedUser].answers;
   const answered = answers.map(id => polls[id]);
 
