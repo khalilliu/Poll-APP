@@ -1,4 +1,4 @@
-let TIMEOUT = 1000;
+let TIMEOUT = 3000;
 
 let users = {
   sarah_edo: {

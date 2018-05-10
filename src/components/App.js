@@ -16,28 +16,27 @@ import LoadingBar from "react-redux-loading";
 //action
 import { handleInitialData } from "../actions/shared";
 
-@connect(mapStateToProps)
 class App extends Component {
   componentDidMount() {
-    this.props.dispatch(handleInitialData());
+    const { dispatch, loading } = this.props;
+    if (loading === true) {
+      dispatch(handleInitialData());
+    }
   }
-
   render() {
-    // const { users, polls } = this.props;
-    //console.log(users);
     return (
       <Router>
         <Fragment>
+          <LoadingBar />
           <div className="container">
             <Nav />
             {this.props.loading === true ? null : (
-              <Switch>
-                <Route exact path="/" component={DashBoard} />
-                <Route path="/add" component={AddPoll} />
+              <div>
+                <Route path="/" exact component={DashBoard} />
                 <Route path="/leaderboard" component={LeaderBoard} />
                 <Route path="/polls/:id" component={Poll} />
-                <Route component={() => <div>Undefined path</div>} />
-              </Switch>
+                <Route path="/add" component={AddPoll} />
+              </div>
             )}
           </div>
         </Fragment>
@@ -46,12 +45,10 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ authedUser, users, polls }) {
+function mapStateToProps({ authedUser, users }) {
   return {
-    loading: authedUser === null,
-    users,
-    polls
+    loading: authedUser === null
   };
 }
 
-export default App;
+export default connect(mapStateToProps)(App);
